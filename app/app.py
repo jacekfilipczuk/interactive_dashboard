@@ -39,12 +39,21 @@ def get_dataframe(session_id):
 
         # simulate an expensive data processing task by sleeping
         # time.sleep(5)
-        df = pd.read_csv('../data/published_questions_data_2018-2020_KEK.csv')
-        df.rename(columns={'platform_name': 'clients'}, inplace=True)
+        df = pd.read_csv('../data/..')
         return df.to_json()
 
     return pd.read_json(query_and_serialize_data(session_id))
 
+
+def serve_layout():
+    session_id = str(uuid.uuid4())
+
+    return html.Div([
+        html.Div(session_id, id='session-id', style={'display': 'none'})
+        ])
+
+
+app.layout = serve_layout
 
 
 if __name__ == '__main__':
