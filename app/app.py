@@ -1,27 +1,13 @@
 import dash
-from flask_caching import Cache
+from config import external_stylesheets, app_name, meta_tags_arg
+from layouts.layout_skeleton import create_layout_skeleton
 
 
-external_stylesheets = [
-    # Dash CSS
-    'https://codepen.io/chriddyp/pen/bWLwgP.css',
-    # Loading screen CSS
-    'https://codepen.io/chriddyp/pen/brPBPO.css']
 
-app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
+app = dash.Dash(__name__, external_stylesheets=external_stylesheets, meta_tags=[meta_tags_arg])
+app.title = app_name
 app.config.suppress_callback_exceptions = True
-cache = Cache(app.server, config={
-    'CACHE_TYPE': 'redis',
-    # Note that filesystem cache doesn't work on systems with ephemeral
-    # filesystems like Heroku.
-    'CACHE_TYPE': 'filesystem',
-    'CACHE_DIR': 'cache-directory',
-
-    # should be equal to maximum number of users on the app at a single time
-    # higher numbers will store more data in the filesystem / redis cache
-    'CACHE_THRESHOLD': 200
-})
-
+app.layout = create_layout_skeleton()
 
 
 
