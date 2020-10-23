@@ -15,9 +15,27 @@ def create_layout_skeleton():
 
 
 def navbar(logo="/assets/husky-logo.png", height="35px", appname="PlaceHolder Name"):
+    header_style = {
+        'background-color': 'rgb(79, 152, 202)',
+        'padding': '1.5rem',
+        'display': 'inline-block',
+        'width': '100%'
+    }
+    logo_husky = html.Img(
+        src=logo,
+        className='three columns',
+        style={
+            'height': 'auto',
+            'width': '140px',  # 'padding': 1
+            'float': 'left',  # 'position': 'relative'
+            'display': 'inline-block'})
+
     navbar = html.Div(
         [dbc.Container(
             [dbc.Row([
+                dbc.Col(html.Div([logo_husky], id='logo_icon'), width=2
+
+                        ),
                 dbc.Col(html.A(
                     # Use row and col to control vertical alignment of logo / brand
                     html.Div(
@@ -25,7 +43,9 @@ def navbar(logo="/assets/husky-logo.png", height="35px", appname="PlaceHolder Na
                     href=linkedin_profile_link, target="_blank"
                 ), width=4),
                 dbc.Col(dbc.NavbarBrand(
-                    appname, className="font-lg text-white"), className="text-right", width=8)
+                    appname, className="font-lg text-white"), className="text-right", width=6)
+
+
             ],
                 style={"align-items": "center", "min-height": "75px"}
             )
@@ -33,7 +53,7 @@ def navbar(logo="/assets/husky-logo.png", height="35px", appname="PlaceHolder Na
             style={"maxWidth": "1140px"})
         ],
         className="bottom16 navbarColor",
-    )
+        style=header_style)
 
     return navbar
 
@@ -133,16 +153,16 @@ def create_footer():
 def create_body():
     #TO-DO: change label names for the tabs according to selected project
     body = dbc.Container([
-        dcc.Tabs(id="tabs-example",
+        dcc.Tabs(id="tabs-header",
                  children=[
-                     dcc.Tab(label='Data & Details', value='tab-1'),
-                     dcc.Tab(label='Profilling', value='tab-2'),
+                     dcc.Tab(label='Data & Details', value='tab-data-description'),
+                     dcc.Tab(label='Graphs', value='tab-graphs'),
                      dcc.Tab(label='Graphs & EDA', value='tab-3'),
                      dcc.Tab(label='Reviews Clustering', value='tab-4'),
                      dcc.Tab(label='Recommender System', value='tab-5')
                  ],
-                 value='tab-1', className="bottom32"),
-        html.Div(id='tabs-content-example')
+                 value='tab-data-description', className="bottom32"),
+        html.Div(id='tabs-content')
     ], style={"maxWidth": "1140px"})
 
     return body
