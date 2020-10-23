@@ -1,5 +1,8 @@
 import dash_html_components as html
 import dash_bootstrap_components as dbc
+import dash_core_components as dcc
+import pandas as pd
+import plotly.express as px
 
 
 def render_data_description():
@@ -80,5 +83,58 @@ def get_techniques_description():
         ], className="boxed")
 
 
-def render_graph_2():
-    return html.Div('Bubbacchiella')
+def get_charts():
+    return html.Div([
+        render_genre_graph(),
+        render_score_distribution_graph()
+    ])
+
+def render_genre_graph():
+    anime_df = pd.read_csv('data/genre_pie_chart.csv')
+    fig = px.pie(anime_df[(anime_df.anime_count > 50) & (anime_df.genre != "[]")], values='anime_count',
+                 names='genre', width=1000)
+
+    return html.Div([
+        dbc.Row([
+            dbc.Col([
+                html.Div([
+                    html.Div("Anime by Genre",
+                              className="font-xl bottom16 paddingtop32 text-color"),
+                    html.Div("The distribution of animes by genre. "
+                             "The initial dataset was filtered by removing genres with less than 50 animes.", className="font-md  text-color")
+                ])
+            ], width={"size": 24, "offset": 1})
+        ]),
+        dbc.Row([
+            dbc.Col([
+                html.Div([
+                    dcc.Graph(id='genres-pie-chart', figure=fig)
+                ])
+            ], width={"size": 36, "offset": 0})
+
+        ])
+    ])
+
+def render_score_distribution_graph():
+    scores_df = pd.read_csv('data/score_distribution_chart.csv')
+    fig = px.bar(scores_df, x='score', y='review_count', title='Reviews Score distribution',
+                 labels={'score': 'score_range'})
+
+    return html.Div([
+        dbc.Row([
+            dbc.Col([
+                html.Div([
+                    html.Div("Review's Score Distribution", className="font-xl bottom16 paddingtop32 text-color"),
+                    html.Div("The distribution of review's scores. The great majority of reviews have a score between 6 and 9."
+                             , className="font-md  text-color")
+                ])
+            ], width={"size": 24, "offset": 1})
+        ]),
+        dbc.Row([
+            dbc.Col([
+                html.Div([
+                    dcc.Graph(id='score-distribution-chart', figure=fig)
+                ])
+            ], width={"size": 36, "offset": 0})
+        ])
+    ])

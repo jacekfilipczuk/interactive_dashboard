@@ -156,7 +156,7 @@ def create_body():
         dcc.Tabs(id="tabs-header",
                  children=[
                      dcc.Tab(label='Data & Details', value='tab-data-description'),
-                     dcc.Tab(label='Profilling', value='tab-2'),
+                     dcc.Tab(label='Graphs', value='tab-graphs'),
                      dcc.Tab(label='Graphs & EDA', value='tab-3'),
                      dcc.Tab(label='Reviews Clustering', value='tab-4'),
                      dcc.Tab(label='Recommender System', value='tab-5')

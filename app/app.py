@@ -2,7 +2,7 @@ import dash
 from config import external_stylesheets, app_name, meta_tags_arg
 from layouts.layout_skeleton import create_layout_skeleton
 from dash.dependencies import Input, Output
-from layouts.content_layouts import render_data_description, render_graph_2
+from layouts.content_layouts import render_data_description, get_charts
 
 
 
@@ -16,8 +16,8 @@ app.layout = create_layout_skeleton()
 def render_tabs_content(tab_value):
     if tab_value == 'tab-data-description':
         return render_data_description()
-    elif tab_value == 'tab-2':
-        return render_graph_2()
+    elif tab_value == 'tab-graphs':
+        return get_charts()
     else:
         pass
 
