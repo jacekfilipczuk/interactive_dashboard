@@ -1,3 +1,5 @@
 dash==1.16.1
 pandas==1.1.2
 pip-chill==1.0.0
+fastai==1.0.58
+transformers==2.5.1
